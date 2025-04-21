@@ -59,7 +59,7 @@ Built with **Node.js + Express**, this microservice uses **MongoDB** for data pe
 
 ---
 
-## 🔌 Cab Partner Integration
+## Cab Partner Integration
 
 The service integrates with external cab partner APIs via a **proxy pattern**. Using Axios and environment-configured URLs, it exposes internal endpoints that forward requests for operations like listing, creating, updating, or deleting cab partners.
 
