@@ -3,6 +3,77 @@ Our team 7 integrated its call center services and Vehicle Rentals microservice 
 https://github.com/Roshr2211/call_support_agent.git --> Call centre support microservice
 https://github.com/sukiperumal/bookmytrip.git --> Vehicle rentals microservice
 
+---
+
+# Vehicle Rentals Management Microservice — BookMyTrip
+
+This microservice powers vehicle rentals for the BookMyTrip platform, handling everything from vehicle listings and bookings to partner integrations and location-based availability. It also acts as a bridge between internal services and external cab APIs.
+
+---
+
+## Features
+
+- Browse and filter rental vehicles by type, location, pricing, and availability
+- Manage bookings and vehicle reviews
+- Support for multiple pickup/drop-off locations
+- Dynamic pricing estimates
+- Integration with external cab partners for fare and partner data
+- Webhook support for real-time updates from external systems
+
+---
+
+## Architecture Overview
+
+Built with **Node.js + Express**, this microservice uses **MongoDB** for data persistence and **Axios** to communicate with external APIs. It uses a **proxy pattern** to abstract external service calls and expose them through internal endpoints, while also supporting event-driven updates via webhooks.
+
+---
+
+## API Endpoints
+
+### Vehicle Management
+
+- **GET `/api/vehicles`**: List vehicles with optional filters (type, location, price, seats, etc.)
+- **GET `/api/vehicles/:id`**: Get details of a specific vehicle
+- **GET `/api/vehicles/types`**: List all available vehicle types
+- **GET `/api/vehicles/availability`**: Find available vehicles in a date/location range
+- **GET `/api/vehicles/:id/pricing`**: Estimate pricing based on usage duration
+- **POST `/api/vehicles/:id/reviews`**: Add a review for a vehicle (auth required)
+- **GET `/api/vehicles/:id/reviews`**: View all reviews for a vehicle
+
+---
+
+### Booking Management
+
+- **POST `/api/bookings`**: Create a new booking with required details
+- **GET `/api/bookings/:id`**: View booking information
+- **PUT `/api/bookings/:id`**: Update booking (e.g., dates, locations)
+- **DELETE `/api/bookings/:id`**: Cancel a booking (status set to `cancelled`)
+
+---
+
+### Location Management
+
+- **GET `/api/locations`**: List pickup/drop-off locations with filters
+- **GET `/api/locations/:id`**: View specific location details
+- **GET `/api/locations/:id/availability`**: Check vehicle availability at a location for a date range
+
+---
+
+## 🔌 Cab Partner Integration
+
+The service integrates with external cab partner APIs via a **proxy pattern**. Using Axios and environment-configured URLs, it exposes internal endpoints that forward requests for operations like listing, creating, updating, or deleting cab partners.
+
+All cab-related logic is centralized in `cabController.js`, and external calls are gracefully handled with request validation, fallback to mock data, and detailed error forwarding when APIs are unavailable or fail.
+
+---
+
+## Error Handling & Fallbacks
+
+- Input validation before external requests
+- External API errors are transparently forwarded
+- Mock data is returned if the external service is unavailable or in development mode
+
+---
 
 # Bookings API Documentation
 
